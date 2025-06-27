@@ -16,7 +16,7 @@ export function ThemeSwitcher() {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Button variant={"ghost"} size={"icon"} onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+        <Button className="text-white hover:text-white" variant={"ghost"} size={"icon"} onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
           <SwitchIcon />
         </Button>
       </TooltipTrigger>
