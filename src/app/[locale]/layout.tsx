@@ -44,7 +44,7 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head />
       <body
-        className={`${pixelifySans.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${pixelifySans.variable} font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"
@@ -54,7 +54,7 @@ export default async function RootLayout({
         >
           <section className="min-h-screen flex flex-col gap-3">
             <NavBar />
-            <div className="bg-red-300 px-24">
+            <div className="px-24">
               <NextIntlClientProvider>{children}</NextIntlClientProvider>
             </div>
           </section>

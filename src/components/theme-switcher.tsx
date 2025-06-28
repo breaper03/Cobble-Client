@@ -9,19 +9,20 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useTranslations } from "next-intl";
 
-export function ThemeSwitcher() {
+export function ThemeSwitcher({ t }: { t: string }) {
   const { setTheme, theme } = useTheme();
 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Button className="text-white hover:text-white" variant={"ghost"} size={"icon"} onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+        <Button className="text-foreground hover:text-foreground" variant={"ghost"} size={"icon"} onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
           <SwitchIcon />
         </Button>
       </TooltipTrigger>
       <TooltipContent>
-        <span>Switch to <span className="font-semibold">{theme === "dark" ? "Light" : "Dark"}</span></span>
+        <span className="font-semibold">{t}</span>
       </TooltipContent>
     </Tooltip>
   );

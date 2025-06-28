@@ -4,5 +4,17 @@
     "about": "Go to the about page",
     "contact": "Go to the contact page",
     "somthing": "Go to the contact page"
+  },
+  "components": {
+    "switchTheme": "Switch Theme",
+    "switchLang": "Switch Language",
+    "en": "English",
+    "es": "Spanish"
+  },
+  "NavBar": {
+    "home": "Home",
+    "biomes": "Biomes",
+    "pokemons": "Pokemons",
+    "items": "Items"
   }
 }

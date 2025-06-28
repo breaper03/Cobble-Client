@@ -18,7 +18,7 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+          "hover:bg-chart-2 hover:text-accent-foreground dark:hover:bg-chart-2/50",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
@@ -27,10 +27,16 @@ const buttonVariants = cva(
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
       },
+      font: {
+        game: "font-game",
+        sans: "font-sans",
+        mono: "font-mono"
+      }
     },
     defaultVariants: {
       variant: "default",
       size: "default",
+      font: "sans"
     },
   }
 )
@@ -39,6 +45,7 @@ function Button({
   className,
   variant,
   size,
+  font,
   asChild = false,
   ...props
 }: React.ComponentProps<"button"> &
@@ -50,7 +57,7 @@ function Button({
   return (
     <Comp
       data-slot="button"
-      className={cn("cursor-pointer", buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size, className }), "cursor-pointer font-semibold", font !== "game")}
       {...props}
     />
   )
