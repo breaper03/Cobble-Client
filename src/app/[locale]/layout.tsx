@@ -45,20 +45,20 @@ export default async function RootLayout({
       <head />
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${pixelifySans.variable} font-sans antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <section className="min-h-screen flex flex-col gap-3">
-            <NavBar />
-            <div className="px-24">
-              <NextIntlClientProvider>{children}</NextIntlClientProvider>
-            </div>
-          </section>
-        </ThemeProvider>
+      ><NextIntlClientProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <section className="min-h-screen flex flex-col gap-3">
+              <NavBar />
+              <div className="px-24">
+                {children}
+              </div>
+            </section>
+          </ThemeProvider></NextIntlClientProvider>
       </body>
     </html>
   );

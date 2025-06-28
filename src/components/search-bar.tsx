@@ -99,7 +99,7 @@ export const SearchBar = () => {
   return (
 
     <section className="w-full h-full flex flex-col items-center justify-center gap-10 px-24 mb-10">
-      <Button variant="ghost" size="sm" onClick={() => setView(view === 0 ? 1 : 0)}>Change View</Button>
+      {/* <Button variant="ghost" size="sm" onClick={() => setView(view === 0 ? 1 : 0)}>Change View</Button> */}
       {
         view === 0 ? (
           <Command>
@@ -161,9 +161,9 @@ export const SearchBar = () => {
               value={value}
               onChange={(e) => setValue(e.target.value)}
             />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 w-full">
+            <div className={cn(pokemons !== null ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 w-full" : "flex w-full")}>
               {
-                pokemons !== null && (
+                pokemons !== null ? (
                   pokemons.map((poke) => (
                     <div key={poke.id} className="cursor-pointer w-full aspect-square items-center justify-center flex flex-col bg-chart-2/10 hover:bg-chart-2/20 transition-colors rounded-lg p-2" onClick={() => router.push(`/${poke.name}`)}>
                       <Image width={150} height={150} src={poke.sprites.front_default} alt={poke.name} />
@@ -181,7 +181,11 @@ export const SearchBar = () => {
                         ))}
                       </div>
                     </div>
-                  )))
+                  ))) : !isLoading && pokemons === null ? (
+                    <span className="font-semibold font-game text-3xl text-center w-full">No results found.</span>
+                  ) : isLoading && (
+                    <span className="font-semibold font-game text-3xl text-center w-full">Loading...</span>
+                  )
               }
             </div>
 
