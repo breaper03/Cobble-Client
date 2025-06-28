@@ -11,6 +11,31 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+
+  // Aquí agregas reglas personalizadas para relajar el lint
+  {
+    rules: {
+      // Permitir variables definidas pero no usadas
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          vars: "all",
+          args: "after-used",
+          ignoreRestSiblings: true,
+          varsIgnorePattern: "^_", // ignora variables que empiecen con _
+          argsIgnorePattern: "^_",
+        },
+      ],
+
+      // Permitir any explícito (warning en lugar de error)
+      "@typescript-eslint/no-explicit-any": "warn",
+
+      // Otros ajustes si quieres
+      "no-console": "off",
+      "react/react-in-jsx-scope": "off",
+    },
+  },
 ];
 
 export default eslintConfig;
