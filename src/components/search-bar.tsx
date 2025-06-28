@@ -18,6 +18,8 @@ import { cn } from "@/lib/utils"
 import { Sprites, Pokemon } from '../models/pokemon.model';
 import { useRouter } from "next/navigation"
 import axios from "axios"
+import { Input } from "./ui/input"
+import { Button } from "./ui/button"
 
 
 export const SearchBar = () => {
@@ -25,7 +27,7 @@ export const SearchBar = () => {
   const [cobblemons, setCobblemons] = useState<Cobblemon[] | null>(null)
   const [pokemons, setPokemons] = useState<any[] | null>(null)
   const [value, setValue] = useState("")
-  const [open, setOpen] = useState(false)
+  const [view, setView] = useState<number>(1)
 
   const abortRef = useRef<AbortController | null>(null)
   const debounceRef = useRef<NodeJS.Timeout | null>(null)
@@ -61,7 +63,7 @@ export const SearchBar = () => {
     try {
       // 1. Buscar desde tu backend (cobblemons)
       const res = await cobbleAdapter.get(
-        `pokemon/search?q=${search}&page=1&limit=15`,
+        `pokemon/search?q=${search}&page=1&limit=30`,
         { signal: controller.signal }
       )
 
@@ -96,55 +98,96 @@ export const SearchBar = () => {
 
   return (
 
-    <section className="w-[40%] h-full flex flex-col items-center justify-center">
-      <Command>
-        <CommandInput
-          placeholder="Search Pokemons..."
-          className="h-9"
-          value={value}
-          onValueChange={setValue}
-        />
-        <CommandList className="max-h-full">
-          {isLoading && <CommandEmpty>Loading...</CommandEmpty>}
+    <section className="w-full h-full flex flex-col items-center justify-center gap-10 px-24 mb-10">
+      <Button variant="ghost" size="sm" onClick={() => setView(view === 0 ? 1 : 0)}>Change View</Button>
+      {
+        view === 0 ? (
+          <Command>
+            <CommandInput
+              placeholder="Search Pokemons..."
+              className="h-9"
+              value={value}
+              onValueChange={setValue}
+            />
+            <CommandList className="max-h-full">
+              {isLoading && <CommandEmpty>Loading...</CommandEmpty>}
 
-          {!isLoading && value.trim() !== "" && (!pokemons || pokemons.length === 0) && (
-            <CommandEmpty>No results found.</CommandEmpty>
-          )}
+              {!isLoading && value.trim() !== "" && (!pokemons || pokemons.length === 0) && (
+                <CommandEmpty>No results found.</CommandEmpty>
+              )}
 
-          {pokemons !== null && (
-            <CommandGroup>
-              {pokemons.map((poke) => (
-                <CommandItem
-                  key={poke.id}
-                  value={poke.name}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
-                    setOpen(false)
-                  }}
-                  className="focus:bg-chart-2"
-                >
-                  <div className="cursor-pointer flex items-center gap-2 justify-between w-full" onClick={() => router.push(`/${poke.name}`)}>
-                    <div className="flex items-center gap-2 ">
-                      <Image width={50} height={50} src={poke.sprites.front_default} alt={poke.name} />
-                      <span className="font-semibold font-game text-xl">{poke.name.charAt(0).toUpperCase() + poke.name.slice(1)}</span>
+              {pokemons !== null && (
+                <CommandGroup>
+                  {pokemons.map((poke) => (
+                    <CommandItem
+                      key={poke.id}
+                      value={poke.name}
+                      onSelect={(currentValue) => {
+                        setValue(currentValue === value ? "" : currentValue)
+                      }}
+                      className="focus:bg-chart-2"
+                    >
+                      <div className="cursor-pointer flex items-center gap-2 justify-between w-full" onClick={() => router.push(`/${poke.name}`)}>
+                        <div className="flex items-center gap-2 ">
+                          <Image width={50} height={50} src={poke.sprites.front_default} alt={poke.name} />
+                          <span className="font-semibold font-game text-xl">{poke.name.charAt(0).toUpperCase() + poke.name.slice(1)}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {poke.types.map((t: any) => (
+                            <Image
+                              key={t.type.name}
+                              width={40}
+                              height={40}
+                              src={`https://play.pokemonshowdown.com/sprites/types/${t.type.name[0].toUpperCase() + t.type.name.slice(1)}.png`}
+                              alt={t.type.name}
+                              className="ml-1"
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
+            </CommandList>
+          </Command>
+
+
+        ) : (
+          <>
+            <Input
+              placeholder="Search Pokemons..."
+              className="h-9 w-1/2 border-chart-2/10"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 w-full">
+              {
+                pokemons !== null && (
+                  pokemons.map((poke) => (
+                    <div key={poke.id} className="cursor-pointer w-full aspect-square items-center justify-center flex flex-col bg-chart-2/10 hover:bg-chart-2/20 transition-colors rounded-lg p-2" onClick={() => router.push(`/${poke.name}`)}>
+                      <Image width={150} height={150} src={poke.sprites.front_default} alt={poke.name} />
+                      <span className="font-semibold font-game text-3xl">{poke.name.charAt(0).toUpperCase() + poke.name.slice(1)}</span>
+                      <div className="flex items-center gap-2">
+                        {poke.types.map((t: any) => (
+                          <Image
+                            key={t.type.name}
+                            width={43}
+                            height={43}
+                            src={`https://play.pokemonshowdown.com/sprites/types/${t.type.name[0].toUpperCase() + t.type.name.slice(1)}.png`}
+                            alt={t.type.name}
+                            className="ml-1"
+                          />
+                        ))}
+                      </div>
                     </div>
-                    {poke.types.map((t: any) => (
-                      <Image
-                        key={t.type.name}
-                        width={40}
-                        height={40}
-                        src={`https://play.pokemonshowdown.com/sprites/types/${t.type.name[0].toUpperCase() + t.type.name.slice(1)}.png`}
-                        alt={t.type.name}
-                        className="ml-1"
-                      />
-                    ))}
-                  </div>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          )}
-        </CommandList>
-      </Command>
-    </section>
+                  )))
+              }
+            </div>
+
+          </>
+        )
+      }
+    </section >
   )
 }
