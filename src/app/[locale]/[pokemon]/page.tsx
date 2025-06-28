@@ -3,16 +3,11 @@ import React from 'react'
 import Image from 'next/image'
 import { usePathname, useSearchParams } from 'next/navigation'
 
-interface PageProps {
-  params: {
-    pokemon: string
-    locale: string
-  }
-}
 
 export default function PokemonPage() {
-  const idk = useSearchParams()
-  const pokemon = idk.get('pokemon')
+  const idk = usePathname()
+  const pokemon = idk.split("/")[2]
+  console.log("pokemon", pokemon)
   return (
     <div>
       <h1 className="font-game text-6xl">Pokemon Page</h1>
