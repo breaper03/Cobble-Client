@@ -1,16 +1,18 @@
+"use client"
 import React from 'react'
 import Image from 'next/image'
+import { usePathname, useSearchParams } from 'next/navigation'
 
-interface Props {
+interface PageProps {
   params: {
     pokemon: string
+    locale: string
   }
 }
 
-
-export default function PokemonPage({ params }: Props) {
-  const { pokemon } = params
-
+export default function PokemonPage() {
+  const idk = useSearchParams()
+  const pokemon = idk.get('pokemon')
   return (
     <div>
       <h1 className="font-game text-6xl">Pokemon Page</h1>
@@ -20,7 +22,7 @@ export default function PokemonPage({ params }: Props) {
         quality={100}
         height={200}
         src={`https://play.pokemonshowdown.com/sprites/ani/${pokemon}.gif`}
-        alt={pokemon}
+        alt={pokemon || "pokemon"}
         className="ml-1"
         style={{ imageRendering: 'auto' }}
       />
