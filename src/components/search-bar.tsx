@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { pokeAdapter } from "@/adapters/poke-adapter"
+import { PokemonClient } from 'pokenode-ts';
 import { cobbleAdapter } from "@/adapters/cobble-adapter"
 import { Cobblemon, TypeEntry } from "@/models/pokemon.model"
 import Image from "next/image"
@@ -13,6 +14,15 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Sprites, Pokemon } from '../models/pokemon.model';
@@ -22,6 +32,7 @@ import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 
 
+// https://img.pokemondb.net/artwork/large/zorua.jpg
 export const SearchBar = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [cobblemons, setCobblemons] = useState<Cobblemon[] | null>(null)
@@ -33,6 +44,8 @@ export const SearchBar = () => {
   const debounceRef = useRef<NodeJS.Timeout | null>(null)
 
   const router = useRouter()
+
+  const pokeApi = new PokemonClient()
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current)
@@ -74,11 +87,11 @@ export const SearchBar = () => {
       const fullPokemons = await Promise.all(
         cobbleResults.map(async (pokemon) => {
           try {
-            const { data }: { data: Pokemon } = await pokeAdapter.get("pokemon/" + pokemon.Pokemon)
-            console.log("res.data", data.types.map((type: TypeEntry) => type.type.name))
+            const data = await pokeApi.getPokemonByName(pokemon.pokemon)
+            console.log("res.data", data)
             return data
           } catch (err) {
-            console.error("Error al obtener detalles de", pokemon.Pokemon)
+            console.error("Error al obtener detalles de", pokemon.pokemon)
             return null
           }
         })
@@ -95,6 +108,8 @@ export const SearchBar = () => {
       setIsLoading(false)
     }
   }
+
+
 
   return (
 
@@ -161,26 +176,44 @@ export const SearchBar = () => {
               value={value}
               onChange={(e) => setValue(e.target.value)}
             />
-            <div className={cn(pokemons !== null ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 w-full" : "flex w-full")}>
+            <div className={cn(pokemons !== null ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 w-full gap-4" : "flex w-full")}>
               {
                 pokemons !== null ? (
                   pokemons.map((poke) => (
-                    <div key={poke.id} className="cursor-pointer w-full aspect-square items-center justify-center flex flex-col bg-chart-2/10 hover:bg-chart-2/20 transition-colors rounded-lg p-2" onClick={() => router.push(`/${poke.name}`)}>
-                      <Image width={150} height={150} src={poke.sprites.front_default} alt={poke.name} />
-                      <span className="font-semibold font-game text-3xl">{poke.name.charAt(0).toUpperCase() + poke.name.slice(1)}</span>
-                      <div className="flex items-center gap-2">
-                        {poke.types.map((t: any) => (
-                          <Image
-                            key={t.type.name}
-                            width={43}
-                            height={43}
-                            src={`https://play.pokemonshowdown.com/sprites/types/${t.type.name[0].toUpperCase() + t.type.name.slice(1)}.png`}
-                            alt={t.type.name}
-                            className="ml-1"
-                          />
-                        ))}
-                      </div>
-                    </div>
+                    <Card
+                      className='aspect-square cursor-pointer hover:bg-card/10 hover:border-2 hover:border-primary hover:opacity-70 w-full h-fit items-center justify-between py-1 px-0.5 overflow-hidden space-y-0 gap-2'
+                      onClick={() => router.push(`/${poke.name}`)}
+                      key={poke.id}
+                    >
+                      <CardHeader className='w-full flex flex-col items-center justify-center px-1 gap-3'>
+                        <CardTitle className='text-center px-0 text-2xl font-game capitalize w-full'>{poke?.name}</CardTitle>
+                        <CardDescription className='flex flex-row items-center justify-center gap-5'>
+                          {poke.types.map((t: any) => (
+                            <Image
+                              key={t.type.name}
+                              width={40}
+                              height={40}
+                              src={`https://play.pokemonshowdown.com/sprites/types/${t.type.name[0].toUpperCase() + t.type.name.slice(1)}.png`}
+                              // src={`https://img.pokemondb.net/artwork/large/${t.type.name[0].toUpperCase() + t.type.name.slice(1)}.jpg`}
+                              alt={t.type.name}
+                              className="ml-1"
+                            />
+                          ))}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className='flex items-center justify-center w-full h-full'>
+                        <Image
+                          key={Math.random()}
+                          width={1}
+                          quality={100}
+                          height={1}
+                          draggable={false}
+                          src={`https://play.pokemonshowdown.com/sprites/ani/${poke.name}.gif`}
+                          alt={poke.name || "pokemon"}
+                          style={{ imageRendering: 'auto', objectFit: "contain", width: "65%", height: "65%", margin: "auto" }}
+                        />
+                      </CardContent>
+                    </Card>
                   ))) : !isLoading && pokemons === null ? (
                     <span className="font-semibold font-game text-3xl text-center w-full">No results found.</span>
                   ) : isLoading && (

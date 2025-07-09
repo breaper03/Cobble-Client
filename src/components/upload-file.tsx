@@ -32,7 +32,7 @@ export default function UploadExcel() {
       const sheet = workbook.Sheets[sheetName]
 
       // Convertimos a JSON usando la primera fila como claves
-      const json: Cobblemon[] = XLSX.utils.sheet_to_json(sheet, { defval: null })
+      const json: any[] = XLSX.utils.sheet_to_json(sheet, { defval: null })
 
       setJsonData(json)
       console.log("json", json)

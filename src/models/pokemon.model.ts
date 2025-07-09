@@ -122,27 +122,30 @@ export const PokemonSchema = z.object({
   past_abilities: z.array(PastAbilitySchema),
 })
 
-const CobblemonSchema = z.object({
+export const CobblemonSchema = z.object({
   id: z.number(),
-  Pokemon: z.string(),
-  Entry: z.number(),
-  Bucket: z.string(),
-  Weight: z.number(),
-  "min-level": z.number(),
-  "max-level": z.number(),
+  pokemon: z.string(),
+  entry: z.string(),
+  bucket: z.string(),
+  weight: z.string(),
+  lvMin: z.string(),
+  lvMax: z.string(),
   biomes: z.string(),
   excludedBiomes: z.nullable(z.string()).optional(),
-  Time: z.string(),
-  Weather: z.string(),
-  Multipliers: z.nullable(z.any()).optional(),
-  Context: z.string(),
-  Presets: z.string(),
-  Conditions: z.nullable(z.any()).optional(),
-  Anticonditions: z.nullable(z.any()).optional(),
-  skyLightMin: z.number(),
-  skyLightMax: z.number(),
-  canSeeSky: z.nullable(z.any()).optional(),
-});
+  time: z.nullable(z.string()).optional(),
+  weather: z.nullable(z.string()).optional(),
+  multipliers: z.nullable(z.string()).optional(),
+  context: z.nullable(z.string()).optional(),
+  presets: z.nullable(z.string()).optional(),
+  conditions: z.nullable(z.string()).optional(),
+  anticonditions: z.nullable(z.string()).optional(),
+  skylightmin: z.nullable(z.number()).optional(),
+  skylightmax: z.nullable(z.number()).optional(),
+  canseesky: z.nullable(z.string()).optional(),
+  uniqueForm: z.nullable(z.string()).optional(),
+  drops: z.nullable(z.string()).optional(),
+  spawnSpecificDrops: z.nullable(z.string()).optional(),
+})
 
 export type NamedAPIResource = z.infer<typeof NamedAPIResourceSchema>
 export type AbilityEntry = z.infer<typeof AbilityEntrySchema>
