@@ -16,8 +16,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-export function LangSwitcher({ t }: { t: any }) {
-
+export const LangSwitcher = ({ t }: { t: any }) => {
   return (
     <DropdownMenu>
       <Tooltip>
@@ -42,8 +41,5 @@ export function LangSwitcher({ t }: { t: any }) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-
-
-
   )
 }

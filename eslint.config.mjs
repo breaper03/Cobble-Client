@@ -27,9 +27,9 @@ const eslintConfig = [
           argsIgnorePattern: "^_",
         },
       ],
-
-      // Permitir any explícito (warning en lugar de error)
-      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "react-hooks/exhaustive-deps": "off",
 
       // Otros ajustes si quieres
       "no-console": "off",

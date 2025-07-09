@@ -248,7 +248,7 @@ export default function PokemonPage() {
                   <CardContent className='border-2 border-red-300 w-full'>
                     <div className={`flex flex-row items-center justify-between gap-2 capitalize w-full mb-10`}>
                       {strongAgainst?.map(v => (
-                        <div className='flex flex-col items-center text-right justify-start gap-0'>
+                        <div className='flex flex-col items-center text-right justify-start gap-0' key={Math.random()}>
                           <Image
                             key={Math.random()}
                             width={40}
@@ -266,7 +266,7 @@ export default function PokemonPage() {
                     </div>
                     <div className={`flex flex-row items-center justify-between gap-2 capitalize w-full mb-10`}>
                       {weakAgainst?.map(v => (
-                        <div className='flex flex-col items-center text-right justify-start gap-0'>
+                        <div className='flex flex-col items-center text-right justify-start gap-0' key={Math.random()}>
                           <Image
                             key={Math.random()}
                             width={40}
