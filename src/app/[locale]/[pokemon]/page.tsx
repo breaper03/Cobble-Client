@@ -161,13 +161,14 @@ export default function PokemonPage() {
                 <CardContent className='flex items-center justify-center w-full h-full'>
                   <Image
                     key={Math.random()}
-                    width={1}
+                    width={100}
                     quality={100}
-                    height={1}
+                    height={100}
                     draggable={false}
-                    src={`https://play.pokemonshowdown.com/sprites/ani/${currentPokemon.name}.gif`}
-                    alt={currentPokemon.name || "pokemon"}
-                    style={{ imageRendering: 'auto', objectFit: "contain", width: "65%", height: "65%", margin: "auto" }}
+                    // src={`https://play.pokemonshowdown.com/sprites/ani/${poke.name}.gif`}
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${currentPokemon.id}.png`}
+                    style={{ imageRendering: 'pixelated', objectFit: "cover", width: "77%", height: "77%", margin: "auto" }}
+                    alt={currentPokemon.name}
                   />
                 </CardContent>
               </Card>
@@ -194,13 +195,14 @@ export default function PokemonPage() {
                 <CardContent className='flex items-center justify-center w-full h-full'>
                   <Image
                     key={Math.random()}
-                    width={1}
+                    width={100}
                     quality={100}
-                    height={1}
+                    height={100}
                     draggable={false}
-                    src={`https://play.pokemonshowdown.com/sprites/ani-shiny/${currentPokemon.name}.gif`}
-                    alt={currentPokemon.name || "pokemon"}
-                    style={{ imageRendering: 'auto', objectFit: "contain", width: "65%", height: "65%", margin: "auto" }}
+                    // src={`https://play.pokemonshowdown.com/sprites/ani/${poke.name}.gif`}
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${currentPokemon.id}.png`}
+                    style={{ imageRendering: 'pixelated', objectFit: "cover", width: "77%", height: "77%", margin: "auto" }}
+                    alt={currentPokemon.name}
                   />
                 </CardContent>
               </Card>
