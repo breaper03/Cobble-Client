@@ -5,7 +5,7 @@ import * as RechartsPrimitive from "recharts"
 
 import { cn } from "@/lib/utils"
 
-// Format: { THEME_NAME: CSS_SELECTOR }
+// formt: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const
 
 export type ChartConfig = {
@@ -112,9 +112,9 @@ function ChartTooltipContent({
   hideLabel = false,
   hideIndicator = false,
   label,
-  labelFormatter,
+  labelformtter,
   labelClassName,
-  formatter,
+  formtter,
   color,
   nameKey,
   labelKey,
@@ -141,10 +141,10 @@ function ChartTooltipContent({
         ? config[label as keyof typeof config]?.label || label
         : itemConfig?.label
 
-    if (labelFormatter) {
+    if (labelformtter) {
       return (
         <div className={cn("font-medium", labelClassName)}>
-          {labelFormatter(value, payload)}
+          {labelformtter(value, payload)}
         </div>
       )
     }
@@ -156,7 +156,7 @@ function ChartTooltipContent({
     return <div className={cn("font-medium", labelClassName)}>{value}</div>
   }, [
     label,
-    labelFormatter,
+    labelformtter,
     payload,
     hideLabel,
     labelClassName,
@@ -192,8 +192,8 @@ function ChartTooltipContent({
                 indicator === "dot" && "items-center"
               )}
             >
-              {formatter && item?.value !== undefined && item.name ? (
-                formatter(item.value, item.name, item, index, item.payload)
+              {formtter && item?.value !== undefined && item.name ? (
+                formtter(item.value, item.name, item, index, item.payload)
               ) : (
                 <>
                   {itemConfig?.icon ? (

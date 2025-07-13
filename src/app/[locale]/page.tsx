@@ -13,7 +13,7 @@ export default function Home() {
       {/* <h1 className="font-game text-6xl">{t('title')}</h1> */}
       <h1 className="font-game text-8xl text-center text-chart-2">CobbleFinder</h1>
       <SearchBar />
-      {/* <UploadExcel /> */}
+      <UploadExcel />
     </div>
   );
 }

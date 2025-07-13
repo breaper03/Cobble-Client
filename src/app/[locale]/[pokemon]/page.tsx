@@ -138,6 +138,7 @@ export default function PokemonPage() {
         !isLoading && currentPokemon && currentCobblemon && strongAgainst && weakAgainst && (
           <div className='flex flex-row items-center justify-bewteen gap-10 w-full'>
             <div className='flex flex-col items-center justify-center gap-10 overflow-hidden min-w-[22%]'>
+              {/* NORMAL */}
               <Card
                 className='aspect-square w-full h-fit items-center justify-between py-1 px-0.5 overflow-hidden space-y-0 gap-2'
                 key={Math.random()}
@@ -172,6 +173,7 @@ export default function PokemonPage() {
                   />
                 </CardContent>
               </Card>
+              {/* SHINY */}
               <Card
                 className='aspect-square w-full h-fit items-center justify-between py-1 px-0.5 overflow-hidden space-y-0 gap-2'
                 key={currentPokemon.id}
