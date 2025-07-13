@@ -22,7 +22,7 @@ function Calendar({
   ...props
 }: React.ComponentProps<typeof DayPicker> & {
   buttonVariant?: React.ComponentProps<typeof Button>["variant"]
-}) {
+} & any) {
   const defaultClassNames = getDefaultClassNames()
 
   return (
@@ -36,7 +36,7 @@ function Calendar({
       )}
       captionLayout={captionLayout}
       formtters={{
-        formtMonthDropdown: (date) =>
+        formtMonthDropdown: (date: any) =>
           date.toLocaleString("default", { month: "short" }),
         ...formtters,
       }}
