@@ -136,3 +136,29 @@ img {
   filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.3));
   image-rendering: auto;
 }
+
+@keyframes shiny-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 1000% 50%;
+  }
+}
+
+.shiny-gradient {
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(194, 233, 255, 1) 12%,
+    rgba(42, 123, 155, 1) 25%,
+    rgba(56, 186, 164, 1) 38%,
+    rgba(87, 199, 133, 1) 50%,
+    rgba(252, 197, 129, 1) 63%,
+    rgba(211, 106, 155, 1) 75%,
+    rgba(234, 183, 207, 1) 88%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  background-size: 2000% 2000%;
+  animation: shiny-gradient 30s linear infinite;
+}

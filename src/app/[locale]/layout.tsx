@@ -24,6 +24,9 @@ const pixelifySans = Pixelify_Sans({
 
 export const metadata: Metadata = {
   title: "CobbleFinder",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default async function RootLayout({
@@ -41,7 +44,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        <link rel="stylesheet" href="/favicon.png" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${pixelifySans.variable} font-sans antialiased`}
       >

@@ -204,28 +204,41 @@ function CarouselPrevious({
 function CarouselNext({
   className,
   variant = "outline",
+  text = "Next",
   size = "icon",
+  func,
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: React.ComponentProps<typeof Button> & { text?: string, func?: () => void }) {
   const { orientation, scrollNext, canScrollNext } = useCarousel();
-
+  const classs = text === "Next" ? "absolute size-8 rounded-full" : "ml-5"
   return (
     <Button
       data-slot="carousel-next"
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+        classs,
         orientation === "horizontal"
           ? "top-1/2 -right-12 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
         className,
       )}
       disabled={!canScrollNext}
-      onClick={scrollNext}
+      onClick={() => {
+        if (func) {
+          func();
+          scrollNext();
+        } else {
+          scrollNext();
+        }
+      }}
       {...props}
     >
-      <ArrowRight />
+      {
+        text !== "Next"
+          ? <span>{text}</span>
+          : <ArrowRight />
+      }
       <span className="sr-only">Next slide</span>
     </Button>
   );

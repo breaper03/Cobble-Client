@@ -147,7 +147,7 @@ export default function PokemonPage() {
   };
 
   return (
-    <div className="flex items-center justify-center oveflow-hidden">
+    <div className="flex items-center justify-center oveflow-hidden w-full">
       {!isLoading &&
         currentPokemon &&
         currentCobblemon &&
@@ -167,7 +167,9 @@ export default function PokemonPage() {
           //   </div>
           // </div>
           <div className="grid grid-cols-2 items-center justify-center h-full w-full gap-5 bg-amber-300 border-2 border-green-300 overflow-hidden">
-            <PokemonImage currentPokemon={currentPokemon} />
+            <PokemonImage currentPokemon={currentPokemon} showShiny={showShiny} setShowShiny={setShowShiny} />
+            {/* <Switch id="shiny" checked={showShiny} onCheckedChange={setShowShiny} />
+            <Label htmlFor="airplane-mode">Shiny Mode</Label> */}
           </div>
         )}
     </div>
