@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Globe } from "lucide-react"
+import * as React from "react";
+import { Globe } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip";
 
 export const LangSwitcher = ({ t }: { t: any }) => {
   return (
@@ -22,7 +22,11 @@ export const LangSwitcher = ({ t }: { t: any }) => {
       <Tooltip>
         <TooltipTrigger asChild>
           <DropdownMenuTrigger asChild>
-            <Button className="text-foreground hover:text-foreground" variant={"ghost"} size={"icon"}>
+            <Button
+              className="text-foreground hover:text-foreground"
+              variant={"ghost"}
+              size={"icon"}
+            >
               <Globe />
               <span className="sr-only">Toggle Language</span>
             </Button>
@@ -33,13 +37,9 @@ export const LangSwitcher = ({ t }: { t: any }) => {
         </TooltipContent>
       </Tooltip>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem>
-          English
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          Spanish
-        </DropdownMenuItem>
+        <DropdownMenuItem>English</DropdownMenuItem>
+        <DropdownMenuItem>Spanish</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
-}
+  );
+};

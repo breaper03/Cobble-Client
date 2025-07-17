@@ -1,55 +1,60 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import * as XLSX from "xlsx"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Loader2, Upload } from "lucide-react"
-import { Cobblemon } from "@/models/pokemon.model"
+import { useState } from "react";
+import * as XLSX from "xlsx";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Loader2, Upload } from "lucide-react";
+import { Cobblemon } from "@/models/pokemon.model";
 
 export default function UploadExcel() {
-  const [isLoading, setIsLoading] = useState(false)
-  const [jsonData, setJsonData] = useState<any[] | null>(null)
-  const [message, setMessage] = useState("")
-  const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(false);
+  const [jsonData, setJsonData] = useState<any[] | null>(null);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-    setIsLoading(true)
-    setMessage("")
-    setError("")
-    setJsonData(null)
+    setIsLoading(true);
+    setMessage("");
+    setError("");
+    setJsonData(null);
 
     try {
-      const data = await file.arrayBuffer()
-      const workbook = XLSX.read(data, { type: "array" })
+      const data = await file.arrayBuffer();
+      const workbook = XLSX.read(data, { type: "array" });
 
       // Solo usamos la primera hoja
-      const sheetName = workbook.SheetNames[0]
-      const sheet = workbook.Sheets[sheetName]
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
 
       // Convertimos a JSON usando la primera fila como claves
-      const json: any[] = XLSX.utils.sheet_to_json(sheet, { defval: null })
+      const json: any[] = XLSX.utils.sheet_to_json(sheet, { defval: null });
 
-      setJsonData(json)
-      console.log("json", json)
+      setJsonData(json);
+      console.log("json", json);
 
-      setMessage("Archivo procesado correctamente.")
+      setMessage("Archivo procesado correctamente.");
     } catch (err) {
-      console.error(err)
-      setError("Error al procesar el archivo.")
+      console.error(err);
+      setError("Error al procesar el archivo.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="space-y-4 max-w-xl">
       <div className="flex items-center gap-2">
-        <Input type="file" accept=".xlsx" onChange={handleFileChange} disabled={isLoading} />
+        <Input
+          type="file"
+          accept=".xlsx"
+          onChange={handleFileChange}
+          disabled={isLoading}
+        />
         <Button disabled>
           <Upload className="w-4 h-4 mr-2" />
           Subir
@@ -83,5 +88,5 @@ export default function UploadExcel() {
         </pre>
       )}
     </div>
-  )
+  );
 }
