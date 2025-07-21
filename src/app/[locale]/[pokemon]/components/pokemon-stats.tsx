@@ -7,14 +7,26 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { Bar, BarChart, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  XAxis,
+  YAxis,
+} from "recharts";
 
-import { ChartConfig, ChartContainer } from "@/components/ui/chart";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 
 const chartConfig = {
-  desktop: {
+  pokemon: {
     label: "value",
-    color: "var(--chart-4)",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
 
@@ -24,20 +36,21 @@ interface Props {
 
 export const PokemonStats = ({ currentPokemon }: Props) => {
   return (
-    <Card className="w-full h-fit">
-      <CardHeader>
+    <Card className="flex flex-col justify-around w-full gap-1 m-0 p-2">
+      <CardHeader className="w-full text-center capitalize text-4xl font-game">
         <CardTitle>Stats</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
-      <CardContent className="border-2 border-red-300 w-full">
-        <ChartContainer config={chartConfig}>
+      <CardContent className="flex flex-row items-center w-full">
+        <ChartContainer
+          config={chartConfig}
+          className="w-full flex flex-row items-center h-fit aspect-[7/3]"
+        >
           <BarChart
-            className="border-2 border-red-300  w-full"
             accessibilityLayer
             data={currentPokemon.stats.map((s: any) => ({
               name: s.stat.name.includes("special")
                 ? `${
-                    "Sp. " +
+                    "Sp." +
                     s.stat.name.split("-")[1].split("")[0].toUpperCase() +
                     s.stat.name
                       .split("-")[1]
@@ -48,31 +61,57 @@ export const PokemonStats = ({ currentPokemon }: Props) => {
               value: s.base_stat,
             }))}
             layout="vertical"
+            margin={{
+              left: 16,
+              right: 16,
+              bottom: 16,
+              top: 16,
+            }}
+            compact
+            className="h-fit max-h-[10%]"
           >
-            <XAxis type="number" dataKey="value" hide />
             <YAxis
+              width={80}
+              allowDuplicatedCategory={false}
               dataKey="name"
               type="category"
+              label={{ position: "left" }}
               style={{
-                fontSize: 12,
+                alignSelf: "start",
+                fontSize: 13,
                 fontWeight: "bold",
-                color: "var(--color-desktop)",
+                color: "var(--color-pokemon)",
                 whiteSpace: "nowrap",
-                width: "100%",
+                textWrap: "nowrap",
               }}
+              hide
               tickLine={false}
-              // tickMargin={10}
               axisLine={false}
               className="capitalize"
             />
+            <XAxis dataKey="value" type="number" hide />
             <Bar
               dataKey="value"
-              fill="var(--color-desktop)"
-              height={1}
-              width={1}
-              radius={5}
-              label={{ position: "right" }}
-            />
+              layout="vertical"
+              fill="var(--chart-2)"
+              // radius={[5, 5, 0, 0]}
+              radius={10}
+            >
+              <LabelList
+                dataKey="name"
+                position="insideLeft"
+                offset={10}
+                className="capitalize fill-(--primary-foreground) font-medium"
+                fontSize={12}
+              />
+              <LabelList
+                dataKey="value"
+                position="right"
+                offset={-35}
+                className="capitalize fill-(--primary-foreground) font-medium"
+                fontSize={12}
+              />
+            </Bar>
           </BarChart>
         </ChartContainer>
       </CardContent>

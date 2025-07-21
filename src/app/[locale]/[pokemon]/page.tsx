@@ -28,7 +28,7 @@ import { set } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { PokemonImage } from './components/pokemon-image';
+import { PokemonImage } from "./components/pokemon-image";
 import { PokemonStats } from "./components/pokemon-stats";
 import { PokemonTypes } from "./components/pokemon-types";
 
@@ -147,30 +147,26 @@ export default function PokemonPage() {
   };
 
   return (
-    <div className="flex items-center justify-center oveflow-hidden w-full">
+    <div className="flex flex-col items-center justify-between oveflow-hidden w-full h-full">
       {!isLoading &&
         currentPokemon &&
         currentCobblemon &&
         strongAgainst &&
         weakAgainst && (
-          // <div className='flex flex-row items-center justify-bewteen gap-10 w-full'>
-          //   <div className='flex flex-col items-center justify-center gap-10 overflow-hidden h-full min-w-[50%] bg-red-300'>
-          //     <div className="flex flex-row items-center justify-center h-full">
-          //       <PokemonImage currentPokemon={currentPokemon} />
-          //     </div>
-          //   </div>
-          //   <div className='flex flex-col items-center justify-center h-full w-full'>
-          //     <div className='w-full bg-red-300 h-full grid-cols-2 grid-rows-2 grid gap-5 items-center justify-center'>
-          //       <PokemonStats currentPokemon={currentPokemon} />
-          //       <PokemonTypes strongAgainst={strongAgainst} weakAgainst={weakAgainst} />
-          //     </div>
-          //   </div>
-          // </div>
-          <div className="grid grid-cols-2 items-center justify-center h-full w-full gap-5 bg-amber-300 border-2 border-green-300 overflow-hidden">
-            <PokemonImage currentPokemon={currentPokemon} showShiny={showShiny} setShowShiny={setShowShiny} />
-            {/* <Switch id="shiny" checked={showShiny} onCheckedChange={setShowShiny} />
-            <Label htmlFor="airplane-mode">Shiny Mode</Label> */}
-          </div>
+          <section className="grid grid-cols-3 items-center justify-between w-full h-fit max-h-[50%] gap-5 overflow-hidden py-10">
+            <div className="flex items-center justify-center w-full h-full overflow-hidden ">
+              <PokemonImage
+                currentPokemon={currentPokemon}
+                showShiny={showShiny}
+                setShowShiny={setShowShiny}
+              />
+            </div>
+            <div className="flex items-center justify-center w-full overflow-hidden col-span-2">
+              <div className="flex w-full h-full">
+                <PokemonStats currentPokemon={currentPokemon} />
+              </div>
+            </div>
+          </section>
         )}
     </div>
   );
