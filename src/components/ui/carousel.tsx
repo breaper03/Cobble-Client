@@ -208,9 +208,9 @@ function CarouselNext({
   size = "icon",
   func,
   ...props
-}: React.ComponentProps<typeof Button> & { text?: string, func?: () => void }) {
+}: React.ComponentProps<typeof Button> & { text?: string; func?: () => void }) {
   const { orientation, scrollNext, canScrollNext } = useCarousel();
-  const classs = text === "Next" ? "absolute size-8 rounded-full" : "ml-5"
+  const classs = text === "Next" ? "absolute size-8 rounded-full" : "ml-5";
   return (
     <Button
       data-slot="carousel-next"
@@ -234,11 +234,7 @@ function CarouselNext({
       }}
       {...props}
     >
-      {
-        text !== "Next"
-          ? <span>{text}</span>
-          : <ArrowRight />
-      }
+      {text !== "Next" ? <span>{text}</span> : <ArrowRight />}
       <span className="sr-only">Next slide</span>
     </Button>
   );

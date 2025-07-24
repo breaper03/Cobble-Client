@@ -146,6 +146,8 @@ export default function PokemonPage() {
     }
   };
 
+  console.log(currentPokemon);
+
   return (
     <div className="flex flex-col items-center justify-between oveflow-hidden w-full h-full">
       {!isLoading &&
@@ -164,6 +166,14 @@ export default function PokemonPage() {
             <div className="flex items-center justify-center w-full overflow-hidden col-span-2">
               <div className="flex w-full h-full">
                 <PokemonStats currentPokemon={currentPokemon} />
+              </div>
+            </div>
+            <div className="flex items-center justify-center w-full overflow-hidden col-span-2">
+              <div className="flex w-full h-full">
+                <PokemonTypes
+                  strongAgainst={strongAgainst}
+                  weakAgainst={weakAgainst}
+                />
               </div>
             </div>
           </section>

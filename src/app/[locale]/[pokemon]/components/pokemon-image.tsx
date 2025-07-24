@@ -59,7 +59,10 @@ export const PokemonImage = ({
           }}
         >
           <CarouselContent className="p-0">
-            <CarouselItem key={Math.random()} className="p-0">
+            <CarouselItem
+              key={Math.random()}
+              className="p-0 w-fit h-fit hover:scale-110 transition-all"
+            >
               <div>
                 <Image
                   key={Math.random()}

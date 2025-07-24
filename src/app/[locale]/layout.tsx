@@ -45,7 +45,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="stylesheet" href="/favicon.png" />
+        <link href="/favicon.png" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${pixelifySans.variable} font-sans antialiased`}
@@ -59,7 +59,9 @@ export default async function RootLayout({
           >
             <section className="min-h-screen flex flex-col gap-3">
               <NavBar />
-              <div className="flex items-center justify-center px-24 w-full h-full">{children}</div>
+              <div className="flex items-center justify-center px-24 w-full h-full">
+                {children}
+              </div>
             </section>
           </ThemeProvider>
         </NextIntlClientProvider>
